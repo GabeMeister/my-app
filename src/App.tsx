@@ -10,9 +10,7 @@ const App: Component = () => {
   }
 
   async function onBtnClick() {
-    const r: Response = await fetch(
-      "https://gabemeister-yousearch-api.onrender.com/"
-    );
+    const r: Response = await fetch(import.meta.env.VITE_BACKEND_API);
     const data: string = await r.text();
 
     console.log("\n\n***** data *****\n", data, "\n\n");
