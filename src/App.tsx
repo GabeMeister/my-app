@@ -1,29 +1,22 @@
-import { Component, createSignal } from "solid-js";
+import { Component, For, createResource, createSignal } from "solid-js";
+import Fetcher from "./Fetcher";
+import { delay } from "./utils";
+
+async function getNames(): Promise<Array<string>> {
+  const data = await Fetcher.get("/user/all");
+  const allUsers: Array<string> = JSON.parse(data).map((d: any) => d.name);
+
+  return allUsers;
+}
 
 const App: Component = () => {
-  const [first, setFirst] = createSignal("Gabe");
-  const [headerText, setHeaderText] = createSignal("Default Header");
-
-  function onInputChange({ target }: KeyboardEvent) {
-    const title = (target as HTMLInputElement).value.trim();
-    setFirst(title);
-  }
-
-  async function onBtnClick() {
-    const r: Response = await fetch(import.meta.env.VITE_BACKEND_API);
-    const data: string = await r.text();
-
-    console.log("\n\nThe Data:\n", data, "\n\n");
-    setHeaderText(data);
-  }
+  const [data] = createResource(getNames);
 
   return (
     <div>
       <p>This is Gabes first SolidJS project</p>
-      <input type="text" onKeyUp={onInputChange} />
-      <p>{first()}</p>
-      <button onClick={onBtnClick}>Fetch Data</button>
-      <h1>{headerText()}</h1>
+      <h1>{JSON.stringify(data.loading)}</h1>
+      <For each={data()}>{(name) => <div>{name}</div>}</For>
     </div>
   );
 };
