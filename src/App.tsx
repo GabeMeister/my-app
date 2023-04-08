@@ -13,7 +13,7 @@ const App: Component = () => {
     const r: Response = await fetch(import.meta.env.VITE_BACKEND_API);
     const data: string = await r.text();
 
-    console.log("\n\n***** data *****\n", data, "\n\n");
+    console.log("\n\nThe Data:\n", data, "\n\n");
     setHeaderText(data);
   }
 
