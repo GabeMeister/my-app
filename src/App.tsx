@@ -47,7 +47,7 @@ const App: Component = () => {
 
   return (
     <div>
-      <p>Display all the names!</p>
+      <p class="text-5xl">Display all the names!</p>
       <h3>Loading: {JSON.stringify(data.loading)}</h3>
       <h3>Add a name:</h3>
       <input
